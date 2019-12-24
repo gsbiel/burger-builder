@@ -1,0 +1,13 @@
+/*Se você notar, o componente Logo tem height:100% como padrão. No entanto, em dispositivos mobile, especificamente no SideDrawer, o Logo deve ter uma altura de 11%. Para fazer isso, implementamos uma classe de estilo .Logo lá no arquivo SideDrawer.css e envelopamos o componente Logo renderizado lá com uma div que possui essa classe. Assim, sobrescrevemos o atributo altura para o valor que desejamos.
+Isso também foi feito na Logo que é renderizada no componente Toolbar*/
+.Logo{
+    background-color:white;
+    padding: 8px;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.Logo img{
+    height: 100%;
+    
+}

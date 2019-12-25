@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './order.module.css';
+import classes from './Order.module.css';
 
 const order = (props) => {
     return(

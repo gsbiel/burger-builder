@@ -87,40 +87,12 @@ class BurgerBuilder extends Component{
         for(let i in this.state.ingredients){
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
         }
+        queryParams.push("price="+this.state.totalPrice);
         const queryString = queryParams.join('&');
         this.props.history.push({
             pathname: '/checkout',
             search: '?' + queryString
         });
-        // //Ao clicar no botão Continue, o Spinner deve ser exibido até que a requisição seja completada.
-        // this.setState({loading:true});
-
-        // //alert('You have clicked on the Continue button...');
-        // //Para comunicar com um backend no FireBase, é preciso colocar o formato do dado que vai ser associado à diretiva, nesse caso, a diretiva é /post e o formato é json.
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     totalPrice: this.state.totalPrice,
-        //     customer:{  // Essa parte é Dumb Code só para deixar o pedido mais realista.
-        //         name: 'Max',
-        //         address:{
-        //             street: 'TestStreet 1',
-        //             zipCode: '41351',
-        //             country: 'Germany'
-        //         },
-        //         email: 'test@test.com'
-        //     },
-        //     deliveryMethod: 'fastest'
-        // }
-        // axios.post('/orders.json', order)
-        //     .then(response => {
-        //         console.log(response);
-        //         // Após a requisição, devemos tanto remover o Spinner quanto o Modal
-        //         this.setState({loading:false, ordering:false});
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         this.setState({loading:false, ordering: false});
-        //     });
     }
 
     updatePurchaseState = (ingredients) => {

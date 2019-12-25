@@ -3,7 +3,7 @@ import React from 'react';
 import Burger from '../../Burger/Burger';
 import Button from '../../UI/Buttton/Button';
 
-import classes from './CheckoutSummary.css';
+import classes from './CheckoutSummary.module.css';
 
 const checkoutSummary = (props) => {
     return(
@@ -12,8 +12,8 @@ const checkoutSummary = (props) => {
             <div style={{width:'100%', margin:'auto'}}>
                 <Burger ingredients={props.ingredients} />
             </div>
-            <Button btnType="Danger">CANCEL</Button>
-            <Button btnType="Success">CONTINUE</Button>
+            <Button clickButton={props.onCheckoutCancel} btnType="Danger">CANCEL</Button>
+            <Button clickButton={props.onCheckoutContinue} btnType="Success">CONTINUE</Button>
         </div>
     );
 }

@@ -58,7 +58,7 @@ class ContactData extends Component {
                         {value:'cheapest', displayValue:'Cheapest'}
                     ]
                 },
-                value: ''
+                value: 'fastest'
             }
         },
         loading: false
@@ -71,24 +71,21 @@ class ContactData extends Component {
         //Ao clicar no botão Continue, o Spinner deve ser exibido até que a requisição seja completada.
         this.setState({loading:true});
 
+        //Acessa os dados que foram inseridos no formulário e cria um objeto com esses dados para ser enviado ao FireBase
+        const formData = {};
+        for(let formElementIdentifier in this.state.orderForm){
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+        }
+
         //Para comunicar com um backend no FireBase, é preciso colocar o formato do dado que vai ser associado à diretiva, nesse caso, a diretiva é /post e o formato é json.
         const order = {
             ingredients: this.props.ingredients,
             totalPrice: this.props.price,
-            customer:{  // Essa parte é Dumb Code só para deixar o pedido mais realista.
-                name: 'Max',
-                address:{
-                    street: 'TestStreet 1',
-                    zipCode: '41351',
-                    country: 'Germany'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
+            orderData: formData
         }
+
         axios.post('/orders.json', order)
             .then(response => {
-                console.log(response);
                 // Após a requisição, devemos tanto remover o Spinner quanto o Modal
                 this.setState({loading:false});
                 this.props.history.push("/");
@@ -124,7 +121,7 @@ class ContactData extends Component {
         }
 
         let form = (
-            <form>
+            <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => {
                    return <Input 
                                 key={formElement.id}
@@ -134,7 +131,7 @@ class ContactData extends Component {
                                 onChangeHandler = {(event)=>this.onChangeHandler(event,formElement.id)}
                             />;
                 })}
-                <Button clickButton={this.orderHandler} btnType="Success">ORDER</Button>
+                <Button btnType="Success">ORDER</Button>
             </form>
         );
 

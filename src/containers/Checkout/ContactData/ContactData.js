@@ -16,7 +16,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
-                value: 'Gaspar'
+                value: ''
             },
             street: {
                 elementType: 'input',
@@ -24,7 +24,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Street'
                 },
-                value: 'Test Street'
+                value: ''
             },
             zipCode: {
                 elementType: 'input',
@@ -32,7 +32,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Zip Code'
                 },
-                value: '12345678'
+                value: ''
             },
             country: {
                 elementType: 'input',
@@ -40,7 +40,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Country'
                 },
-                value: 'Brazil'
+                value: ''
             },
             email: {
                 elementType: 'input',
@@ -48,7 +48,7 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your Email'
                 },
-                value: 'gaspar@email.com'
+                value: ''
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -100,6 +100,19 @@ class ContactData extends Component {
 
     }
 
+    onChangeHandler = (event,key) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+        const updatedFormElement = {
+            ...updatedOrderForm[key]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[key] = updatedFormElement;
+
+        this.setState({orderForm: updatedOrderForm});
+    }
+
     render(){
 
         const formElementsArray = [];
@@ -118,6 +131,7 @@ class ContactData extends Component {
                                 elementType={formElement.config.elementType} 
                                 elementConfig={formElement.config.elementConfig}
                                 value={formElement.config.value}
+                                onChangeHandler = {(event)=>this.onChangeHandler(event,formElement.id)}
                             />;
                 })}
                 <Button clickButton={this.orderHandler} btnType="Success">ORDER</Button>

@@ -16,7 +16,11 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
-                value: ''
+                value: '',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             street: {
                 elementType: 'input',
@@ -24,7 +28,11 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Street'
                 },
-                value: ''
+                value: '',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             zipCode: {
                 elementType: 'input',
@@ -32,7 +40,13 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Zip Code'
                 },
-                value: ''
+                value: '',
+                validation:{
+                    required: true,
+                    minLength:5,
+                    maxLength:5
+                },
+                valid: false
             },
             country: {
                 elementType: 'input',
@@ -40,7 +54,11 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Country'
                 },
-                value: ''
+                value: '',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             email: {
                 elementType: 'input',
@@ -48,7 +66,11 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your Email'
                 },
-                value: ''
+                value: '',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -63,6 +85,24 @@ class ContactData extends Component {
         },
         loading: false
     };
+
+    checkValidity = (value, rules) => {
+        let isValid = true;
+
+        if(rules.required){
+            isValid= value.trim() !== '' && isValid;
+        }
+
+        if(rules.minLength){
+            isValid = value.length >= rules.minLength && isValid;
+        }
+
+        if(rules.maxLength){
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        return isValid;
+    }
 
     orderHandler = (event) => {
         //Esse método configura o evento de se clicar no botão de submit do formulário. Uma coisa a se saber, ao se clicar em um botão dentro de um <form> uma requisição será feita e a página vai ser recarregada. Como não desejamos isso, temos que prevenir o comportamento padrão do <form> para que não percamos os dados do estado do componente que possui o <form>.
@@ -105,8 +145,9 @@ class ContactData extends Component {
             ...updatedOrderForm[key]
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value,updatedFormElement.validation);
         updatedOrderForm[key] = updatedFormElement;
-
+        console.log(updatedFormElement);
         this.setState({orderForm: updatedOrderForm});
     }
 

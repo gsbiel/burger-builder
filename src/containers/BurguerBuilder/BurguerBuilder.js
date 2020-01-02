@@ -21,8 +21,7 @@ class BurgerBuilder extends Component{
     constructor(props){
         super(props);
         this.state = {
-            ingredients:null,
-            totalPrice: 4,
+
             purchasable:false,
             ordering: false,
             loading: false,
@@ -31,17 +30,17 @@ class BurgerBuilder extends Component{
     }
 
     componentDidMount(){
-        axios.get('https://my-react-burger-40b18.firebaseio.com/ingredients.json')
-            .then(response => {
-                let data=null
-                if(response){
-                    data = response.data;
-                }
-                this.setState({ingredients: data})
-            })
-            .catch(error=>{
-                this.setState({error:true})
-            })
+        // axios.get('https://my-react-burger-40b18.firebaseio.com/ingredients.json')
+        //     .then(response => {
+        //         let data=null
+        //         if(response){
+        //             data = response.data;
+        //         }
+        //         this.setState({ingredients: data})
+        //     })
+        //     .catch(error=>{
+        //         this.setState({error:true})
+        //     })
     }
 
     addIngredientHandler = (type) =>{

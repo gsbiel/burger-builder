@@ -11,7 +11,7 @@ const initialState = {
         cheese: 0,
         meat: 0
     },
-    totalPrice: 4
+    totalPrice: 4.00
 };
 
 const reducer = (state = initialState,action) => {

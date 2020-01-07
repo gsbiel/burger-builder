@@ -15,13 +15,6 @@ import {
     REMOVE_INGREDIENT 
 } from '../../actions/actions';
 
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    bacon: 0.7,
-    cheese:0.4,
-    meat: 1.3
-}
-
 class BurgerBuilder extends Component{
 
     constructor(props){
@@ -46,30 +39,6 @@ class BurgerBuilder extends Component{
         //     .catch(error=>{
         //         this.setState({error:true})
         //     })
-    }
-
-    addIngredientHandler = (type) =>{
-        const actualState = this.state;
-        const actualIngredients = actualState.ingredients;
-        const newIngredients = {...actualIngredients};
-        newIngredients[type] = newIngredients[type] + 1;
-        const newPrice = actualState.totalPrice + INGREDIENT_PRICES[type];
-        const newState = {...actualState, ingredients: newIngredients, totalPrice: newPrice}
-        this.setState(newState);
-
-        this.updatePurchaseState(newIngredients);
-    }
-
-    removeIngredientHandler = (type) =>{
-        const actualState = this.state;
-        const actualIngredients = actualState.ingredients;
-        const newIngredients = {...actualIngredients};
-        newIngredients[type] = actualIngredients[type]>0 ? (newIngredients[type] - 1) : 0;
-        const newPrice = actualState.totalPrice - INGREDIENT_PRICES[type];
-        const newState = {...actualState, ingredients: newIngredients, totalPrice: newPrice}
-        this.setState(newState);
-
-        this.updatePurchaseState(newIngredients);
     }
 
     orderClickHandler = () =>{

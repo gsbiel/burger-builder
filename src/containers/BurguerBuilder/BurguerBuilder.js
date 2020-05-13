@@ -20,7 +20,6 @@ class BurgerBuilder extends Component{
     constructor(props){
         super(props);
         this.state = {
-            purchasable:false,
             ordering: false,
             loading: false,
             error: false
@@ -75,7 +74,7 @@ class BurgerBuilder extends Component{
         const sum = arrayAmount.reduce((previous,next)=>{
             return previous+next;
         },0);
-        this.setState({purchasable: sum ? true : false });
+        return sum>0;
     }
 
 
@@ -99,7 +98,7 @@ class BurgerBuilder extends Component{
                         ingredientRemoved = {this.props.onIngredientRemove}
                         isDisableObj={checkDisableBtn} 
                         price={this.props.price}
-                        purchasable={this.state.purchasable}
+                        purchasable={this.updatePurchaseState(this.props.ings)}
                         ordering={this.orderClickHandler}/>
                 </React.Fragment>
             );

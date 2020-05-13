@@ -55,15 +55,16 @@ class BurgerBuilder extends Component{
     continueHandler = () => {
         // Vamos passar os dados dos ingredientes como argumentos dentro da URL, como queries.
         // O método encodeURIComponent() pega elementos de um objeto e formata eles para que sejam inseridos em uma query string
-        const queryParams = [];
-        for(let i in this.state.ingredients){
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
-        }
-        queryParams.push("price="+this.state.totalPrice);
-        const queryString = queryParams.join('&');
+        // const queryParams = [];
+        // for(let i in this.state.ingredients){
+        //     queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+        // }
+        // queryParams.push("price="+this.state.totalPrice);
+        // const queryString = queryParams.join('&');
+
+        // AGORA QUE REDUX ESTÁ SENDO USADO, NÃO É PRECISO PASSAR ARGUMENTOS VIA QUERY STRING DENTRO DA URL
         this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
+            pathname: '/checkout'
         });
     }
 

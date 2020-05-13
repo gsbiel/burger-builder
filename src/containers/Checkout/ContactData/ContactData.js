@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {connect} from 'react-redux'
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Button from '../../../components/UI/Buttton/Button';
 import classes from './ContactData.module.css';
@@ -125,8 +126,8 @@ class ContactData extends Component {
 
         //Para comunicar com um backend no FireBase, é preciso colocar o formato do dado que vai ser associado à diretiva, nesse caso, a diretiva é /post e o formato é json.
         const order = {
-            ingredients: this.props.ingredients,
-            totalPrice: this.props.price,
+            ingredients: this.props.ings,
+            totalPrice: this.props.totalPrice,
             orderData: formData
         }
 
@@ -204,4 +205,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+    return {
+        ings: state.ingredients,
+        totalPrice: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);

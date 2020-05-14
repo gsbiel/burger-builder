@@ -4,5 +4,7 @@ export {
 
 export {
     addIngredient,
-    removeIngredient
+    removeIngredient,
+    setIngredients,
+    initIngredients
 } from './burguerBuilder'

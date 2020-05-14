@@ -6,14 +6,14 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../components/hoc/withErrorHandler/withErrorHandler';
-
+import axios from '../../axios-orders';
 import {connect} from 'react-redux';
-
-import axios from '../../axios-orders'; //instância do axios importada para realizer pedidos.
 
 import {
     addIngredient,
-    removeIngredient
+    removeIngredient,
+    initIngredients
+    
 } from '../../store/actions/index'
 
 class BurgerBuilder extends Component{
@@ -28,17 +28,7 @@ class BurgerBuilder extends Component{
     }
 
     componentDidMount(){
-        // axios.get('https://my-react-burger-40b18.firebaseio.com/ingredients.json')
-        //     .then(response => {
-        //         let data=null
-        //         if(response){
-        //             data = response.data;
-        //         }
-        //         this.setState({ingredients: data})
-        //     })
-        //     .catch(error=>{
-        //         this.setState({error:true})
-        //     })
+        this.props.onInitIngredients();
     }
 
     orderClickHandler = () =>{
@@ -88,7 +78,7 @@ class BurgerBuilder extends Component{
         
         let orderSummary = null;
 
-        let burguer = this.state.error ? <p>Ingredients could not be loaded :(</p> : <Spinner/>;
+        let burguer = this.props.error ? <p>Ingredients could not be loaded :(</p> : <Spinner/>;
 
         if(this.props.ings){
 
@@ -130,14 +120,16 @@ class BurgerBuilder extends Component{
 const mapStateToProps = (state) => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onIngredientAdded: (ingName) => {dispatch(addIngredient(ingName))},
-        onIngredientRemove: (ingName) => {dispatch(removeIngredient(ingName))}
+        onIngredientRemove: (ingName) => {dispatch(removeIngredient(ingName))},
+        onInitIngredients: () => {dispatch(initIngredients())}
     };
 };
 

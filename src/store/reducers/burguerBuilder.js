@@ -1,7 +1,7 @@
 import {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT
-} from '../actions/actions';
+} from '../actions/actionTypes';
 
 
 const initialState = {

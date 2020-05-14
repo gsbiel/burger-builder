@@ -13,7 +13,7 @@ import axios from '../../axios-orders'; //instância do axios importada para rea
 import { 
     ADD_INGREDIENT,
     REMOVE_INGREDIENT 
-} from '../../actions/actions';
+} from '../../store/actions/actionTypes';
 
 class BurgerBuilder extends Component{
 

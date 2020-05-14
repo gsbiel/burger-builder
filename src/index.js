@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
-import reducer from './reducers/reducers';
+import reducer from './store/reducers/burguerBuilder';
 
 import './index.css';
 import App from './App';

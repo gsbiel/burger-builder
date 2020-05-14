@@ -10,10 +10,11 @@ import withErrorHandler from '../../components/hoc/withErrorHandler/withErrorHan
 import {connect} from 'react-redux';
 
 import axios from '../../axios-orders'; //instância do axios importada para realizer pedidos.
-import { 
-    ADD_INGREDIENT,
-    REMOVE_INGREDIENT 
-} from '../../store/actions/actionTypes';
+
+import {
+    addIngredient,
+    removeIngredient
+} from '../../store/actions/index'
 
 class BurgerBuilder extends Component{
 
@@ -135,8 +136,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onIngredientAdded: (ingName) => {dispatch({type:ADD_INGREDIENT, ingredientName: ingName })},
-        onIngredientRemove: (ingName) => {dispatch({type:REMOVE_INGREDIENT,ingredientName: ingName})}
+        onIngredientAdded: (ingName) => {dispatch(addIngredient(ingName))},
+        onIngredientRemove: (ingName) => {dispatch(removeIngredient(ingName))}
     };
 };
 

@@ -2,7 +2,10 @@ import {
     PURCHASE_BURGER_FAIL,
     PURCHASE_BURGER_SUCCESS,
     PURCHASE_BURGER_START,
-    PURCHASE_INIT
+    PURCHASE_INIT,
+    FETCH_ORDERS_SUCCESS,
+    FETCH_ORDERS_INIT,
+    FETCH_ORDERS_FAIL
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -38,6 +41,22 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false
+            };          
+        case FETCH_ORDERS_INIT:
+            return{
+                ...state,
+                loading: true
+            };
+        case FETCH_ORDERS_SUCCESS:
+            return{
+                ...state,
+                orders: action.orders,
+                loading: false
+            };
+        case FETCH_ORDERS_FAIL:
+            return {
+                ...state,
+                loading: false,
             };
         default:
             return state;

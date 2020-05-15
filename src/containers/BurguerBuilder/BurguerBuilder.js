@@ -12,7 +12,8 @@ import {connect} from 'react-redux';
 import {
     addIngredient,
     removeIngredient,
-    initIngredients
+    initIngredients,
+    purchaseInit
     
 } from '../../store/actions/index'
 
@@ -54,6 +55,7 @@ class BurgerBuilder extends Component{
         // const queryString = queryParams.join('&');
 
         // AGORA QUE REDUX ESTÁ SENDO USADO, NÃO É PRECISO PASSAR ARGUMENTOS VIA QUERY STRING DENTRO DA URL
+        this.props.onInitPurchase()
         this.props.history.push({
             pathname: '/checkout'
         });
@@ -119,9 +121,9 @@ class BurgerBuilder extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice,
-        error: state.error
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     };
 };
 
@@ -129,7 +131,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onIngredientAdded: (ingName) => {dispatch(addIngredient(ingName))},
         onIngredientRemove: (ingName) => {dispatch(removeIngredient(ingName))},
-        onInitIngredients: () => {dispatch(initIngredients())}
+        onInitIngredients: () => {dispatch(initIngredients())},
+        onInitPurchase: () => {dispatch(purchaseInit())}
     };
 };
 

@@ -20,50 +20,48 @@ const INGREDIENT_PRICES = {
 }
 
 const reducer = (state = initialState,action) => {
-    if(action.type === ADD_INGREDIENT){
-        const newState = {
-            ...state,
-            ingredients:{
-                ...state.ingredients,
-                [action.ingredientName]: state.ingredients[action.ingredientName] + 1 
-            },
-            totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-        };
-        return newState;
+    switch(action.type){
+        case ADD_INGREDIENT:
+            const newState = {
+                ...state,
+                ingredients:{
+                    ...state.ingredients,
+                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1 
+                },
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+            };
+            return newState;
+
+        case REMOVE_INGREDIENT:
+            const newState = {
+                ...state,
+                ingredients:{
+                    ...state.ingredients,
+                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
+                },
+                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+            };
+            return newState;
+        case SET_INGREDIENTS:
+            return {
+                ...state,
+                ingredients: {
+                    salad: action.ingredients.salad,
+                    bacon: action.ingredients.bacon,
+                    cheese: action.ingredients.cheese,
+                    meat: action.ingredients.meat
+                },
+                totalPrice: 4,
+                error: false
+            }
+        case FETCH_INGREDIENTS_FAILED:
+            return {
+                ...state,
+                error: true
+            }
+        default:
+            return state;
     }
-    else if(action.type === REMOVE_INGREDIENT){
-        const newState = {
-            ...state,
-            ingredients:{
-                ...state.ingredients,
-                [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-            },
-            totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
-        };
-        return newState;
-    }
-    else if(action.type === SET_INGREDIENTS){
-        return {
-            ...state,
-            ingredients: {
-                salad: action.ingredients.salad,
-                bacon: action.ingredients.bacon,
-                cheese: action.ingredients.cheese,
-                meat: action.ingredients.meat
-            },
-            totalPrice: 4,
-            error: false
-        }
-    }
-    else if(action.type === FETCH_INGREDIENTS_FAILED){
-        return {
-            ...state,
-            error: true
-        }
-    }
-    else{
-        return state;
-    } 
 };
 
 export default reducer;

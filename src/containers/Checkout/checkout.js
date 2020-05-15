@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux'
 
 import ContactData from './ContactData/ContactData';
@@ -46,8 +46,9 @@ class Checkout extends Component {
     }
 
     render(){
-        // Observe a rota do ContactData que foi feita com o argumento render. Isso foi feito pois assim podemos passar dados pela rota sem precisar criar uma query na URL. Note que os objetos que o Router passa como argumento chegam à função anônima dentro de "props", então você tem que repassar esse props para o componente que está sendo instânciado.
-        return(
+        let summary = <Redirect to="/" />
+        if(this.props.ings){
+            summary = 
             <div>
                 <CheckoutSummary    
                     onCheckoutCancel={this.onCheckoutCancel} 
@@ -55,10 +56,12 @@ class Checkout extends Component {
                     ingredients={this.props.ings}
                 />
                 <Route  path={this.props.match.path + '/contact-data'} 
-                        component = {ContactData} 
+                            component = {ContactData} 
                 />
             </div>
-        );
+        }
+        // Observe a rota do ContactData que foi feita com o argumento render. Isso foi feito pois assim podemos passar dados pela rota sem precisar criar uma query na URL. Note que os objetos que o Router passa como argumento chegam à função anônima dentro de "props", então você tem que repassar esse props para o componente que está sendo instânciado.
+        return summary;
     }
 }
 

@@ -5,6 +5,11 @@ import Button from '../../../components/UI/Buttton/Button';
 import classes from './ContactData.module.css';
 import Input from '../../../components/UI/Input/Input';
 import axios from '../../../axios-orders';
+import withErrorHandler from '../../../components/hoc/withErrorHandler/withErrorHandler';
+
+import {
+    purchaseBurger
+} from '../../../store/actions/index';
 
 class ContactData extends Component {
     state={
@@ -89,7 +94,6 @@ class ContactData extends Component {
                 validation:{}
             }
         },
-        loading: false,
         formIsValid: false
     };
 
@@ -115,9 +119,6 @@ class ContactData extends Component {
         //Esse método configura o evento de se clicar no botão de submit do formulário. Uma coisa a se saber, ao se clicar em um botão dentro de um <form> uma requisição será feita e a página vai ser recarregada. Como não desejamos isso, temos que prevenir o comportamento padrão do <form> para que não percamos os dados do estado do componente que possui o <form>.
         event.preventDefault();
 
-        //Ao clicar no botão Continue, o Spinner deve ser exibido até que a requisição seja completada.
-        this.setState({loading:true});
-
         //Acessa os dados que foram inseridos no formulário e cria um objeto com esses dados para ser enviado ao FireBase
         const formData = {};
         for(let formElementIdentifier in this.state.orderForm){
@@ -131,17 +132,7 @@ class ContactData extends Component {
             orderData: formData
         }
 
-        axios.post('/orders.json', order)
-            .then(response => {
-                // Após a requisição, devemos tanto remover o Spinner quanto o Modal
-                this.setState({loading:false});
-                this.props.history.push("/");
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({loading:false});
-            });
-
+        this.props.onOrderBurger(order);
     }
 
     onChangeHandler = (event,key) => {
@@ -190,7 +181,7 @@ class ContactData extends Component {
             </form>
         );
 
-        if(this.state.loading){
+        if(this.props.loading){
             form=(
                 <Spinner />
             );
@@ -202,14 +193,21 @@ class ContactData extends Component {
                 {form}   
             </div>
         );
-    }
-}
+    };
+};
 
 const mapStateToProps = (state) => {
     return {
         ings: state.ingredients,
-        totalPrice: state.totalPrice
-    }
-}
+        totalPrice: state.totalPrice,
+        loading: state.loading
+    };
+};
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+    return{
+        onOrderBurger: (orderData) => dispatch(purchaseBurger(orderData))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

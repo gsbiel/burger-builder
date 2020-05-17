@@ -13,3 +13,7 @@ export {
     setIngredients,
     initIngredients
 } from './burguerBuilder'
+
+export {
+    auth
+} from './auth';

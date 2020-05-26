@@ -19,10 +19,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (authData) => {
+export const authSuccess = (token, userId) => {
     return {
         type: AUTH_SUCCESS,
-        authData: authData
+        token: token,
+        idToken: userId
     };
 };
 
@@ -46,8 +47,9 @@ export const auth = (email, password, isSignup) => {
 
         axios.post(AUTH_URL, authData)
             .then(resp => {
-                console.log(resp.data);
-                dispatch(authSuccess(resp.data));
+                console.log(resp.data.idToken);
+                console.log(resp.data.localId);
+                dispatch(authSuccess(resp.data.idToken, resp.data.localId));
             })
             .catch(err => {
                 console.log(err);
